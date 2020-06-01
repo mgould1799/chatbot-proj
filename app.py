@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from slack import WebClient
 from flask_sqlalchemy import SQLAlchemy
 import datetime
@@ -17,7 +17,7 @@ def sendMesage():
     try:
         #send message to slack
         response = client.chat_postMessage(
-            channel='#general',
+            channel=app.config['SLACK_CHANNEL'],
             text=messageToSend)
         assert response["message"]["text"] == messageToSend
 
@@ -36,13 +36,13 @@ def sendMesage():
 @app.route('/bot/list/message')
 def getMessages():
     try:
-        query = Message.query.all()
-        print(query[0])
-        print(query)
+        rows = Message.query.all()
+        records = [row.to_json() for row in rows]
+        return jsonify(records), 200
     except Exception as e:
         print(e)
         return {"error": str(e)}, 500
-    return '', 204
+
 
 
 
