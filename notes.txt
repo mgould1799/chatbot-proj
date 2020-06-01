@@ -1,0 +1,6 @@
+- sqlalchemy query:
+    https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
+- fix for docker container:
+    https://github.com/kiasaki/docker-alpine-postgres/issues/18:
+- sql statement to create table:
+    CREATE TABLE messages (message_id serial PRIMARY KEY, message VARCHAR NOT NULL, created_on TIMESTAMP NOT NULL);

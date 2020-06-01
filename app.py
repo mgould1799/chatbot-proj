@@ -1,11 +1,7 @@
-from flask import Flask, request, make_response
+from flask import Flask, request
 from slack import WebClient
-from slack.errors import SlackApiError
 from flask_sqlalchemy import SQLAlchemy
-import time
-
-
-import json
+import datetime
 
 app = Flask(__name__)
 app.config.from_pyfile('./conf/slack-project-conf.py')
@@ -19,24 +15,34 @@ def sendMesage():
 
     client = WebClient(token=app.config['SLACK_KEY'])
     try:
-        # response = client.chat_postMessage(
-        #     channel='#general',
-        #     text=messageToSend)
-        # assert response["message"]["text"] == messageToSend
-        messageClass = Message(message=messageToSend, created_on=time.time())
+        #send message to slack
+        response = client.chat_postMessage(
+            channel='#general',
+            text=messageToSend)
+        assert response["message"]["text"] == messageToSend
+
+        #save message to database
+        messageClass = Message(message=messageToSend,
+                               created_on=datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
         db.session.add(messageClass)
         db.session.commit()
-        print("message added to database")
     except Exception as e:
-        # You will get a SlackApiError if "ok" is False
         print(e)
-        # assert e.response["ok"] is False
-        # assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
-        # print(f"Got an error: {e.response['error']}")
+        return {"error": str(e)}, 500
     return '', 204
 
 
-# def StoreMessageDB(message, timestamp):
+
+@app.route('/bot/list/message')
+def getMessages():
+    try:
+        query = Message.query.all()
+        print(query[0])
+        print(query)
+    except Exception as e:
+        print(e)
+        return {"error": str(e)}, 500
+    return '', 204
 
 
 
