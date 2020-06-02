@@ -1,11 +1,7 @@
 from app import db
-from sqlalchemy_serializer import SerializerMixin
 
-
-
-class Message(db.Model, SerializerMixin):
+class Message(db.Model):
     __tablename__ = 'messages'
-
     message_id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String())
     created_on = db.Column(db.String)

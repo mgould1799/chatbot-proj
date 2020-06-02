@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import 'rxjs/add/operator/catch';
+import {HttpClient} from '@angular/common/http';
+
+import { catchError } from 'rxjs/operators';
+
 
 
 @Injectable()
@@ -8,9 +10,19 @@ export class ChatbotApiService {
 
   constructor(private http: HttpClient) {}
 
-  // GET method to send slack message
+  // POST method to send slack message
   async SendMessage(message) {
-    let params = new HttpClient().set('message', message);
-    return await this.http.get('', {params})
+    return await this.http.post('http://localhost:5000/bot/message', {params: message}).
+    toPromise().then(response => {
+      return {response: response}
+    });
+  }
+
+  async ListMessages() {
+    return await this.http.get('http://localhost:5000/bot/list/message').
+    toPromise().then(response => {
+      return {response: response}
+    });
   }
 }
+

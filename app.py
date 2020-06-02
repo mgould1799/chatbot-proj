@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 
 from db import Message
 
-@app.route('/bot/message')
+@app.route('/bot/message', methods=['POST'])
 def sendMesage():
     messageToSend = request.args.get("message")
 
@@ -31,9 +31,7 @@ def sendMesage():
         return {"error": str(e)}, 500
     return '', 204
 
-
-
-@app.route('/bot/list/message')
+@app.route('/bot/list/message', methods=['GET'])
 def getMessages():
     try:
         rows = Message.query.all()
@@ -42,10 +40,6 @@ def getMessages():
     except Exception as e:
         print(e)
         return {"error": str(e)}, 500
-
-
-
-
 
 if __name__ == '__main__':
     app.run()
