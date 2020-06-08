@@ -7,13 +7,20 @@ import { ChatbotApiService } from 'services/chatbot.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'frontend';
-  messages = []
+  title = 'Slack Chatbot App';
+  messages : any;
+  inputMessage = '';
 
   constructor(private chatBotService: ChatbotApiService) {}
-  ngOnInit(){
-    let messageList = this.chatBotService.ListMessages();
-    this.messages = messageList['result'];
-    console.log(this.messages);
+  async ngOnInit() {
+    let messageList = await this.chatBotService.ListMessages();
+    this.messages = messageList['response'];
+    console.log(this.messages)
+
+  }
+
+  async sendMessage(){
+    console.log(this.inputMessage);
+    await this.chatBotService.SendMessage(this.inputMessage);
   }
 }

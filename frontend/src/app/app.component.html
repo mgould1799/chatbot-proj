@@ -1,7 +1,16 @@
-<h1>I am a header</h1>
+<div>
+  <h3>Messages</h3>
+  <p *ngFor="let message of messages">
+    {{message.message}} {{message.created_on}}
+  </p>
+</div>
 
 <div>
-  <p *ngFor="let message of messages">
-    {{message}}
-  </p>
+  <h3>Add a message</h3>
+  <mat-form-field class="">
+    <input [(ngModel)]='inputMessage' placeholder="Message Text" >
+  </mat-form-field>
+  <mat-form-field>
+    <button (click)="sendMessage()">Send Message</button>
+  </mat-form-field>
 </div>
