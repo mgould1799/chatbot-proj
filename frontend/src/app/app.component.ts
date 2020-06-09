@@ -13,14 +13,17 @@ export class AppComponent implements OnInit{
 
   constructor(private chatBotService: ChatbotApiService) {}
   async ngOnInit() {
-    let messageList = await this.chatBotService.ListMessages();
-    this.messages = messageList['response'];
-    console.log(this.messages)
+    await this.listMessages();
 
   }
 
+  async listMessages(){
+    let messageList = await this.chatBotService.ListMessages();
+    this.messages = messageList['response'];
+  }
   async sendMessage(){
     console.log(this.inputMessage);
     await this.chatBotService.SendMessage(this.inputMessage);
+    await this.listMessages();
   }
 }
