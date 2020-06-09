@@ -12,7 +12,6 @@ export class ChatbotApiService {
 
   // POST method to send slack message
   async SendMessage(message) {
-    console.log(message)
     return await this.http.post('http://localhost:5000/bot/message?message='+message, {}).
     toPromise().then(response => {
       return {response: response}

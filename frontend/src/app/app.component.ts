@@ -22,8 +22,8 @@ export class AppComponent implements OnInit{
     this.messages = messageList['response'];
   }
   async sendMessage(){
-    console.log(this.inputMessage);
     await this.chatBotService.SendMessage(this.inputMessage);
     await this.listMessages();
+    this.inputMessage = '';
   }
 }
