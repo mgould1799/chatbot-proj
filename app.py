@@ -34,7 +34,7 @@ def sendMesage():
 @app.route('/bot/list/message', methods=['GET'])
 def getMessages():
     try:
-        rows = Message.query.all()
+        rows = Message.query.order_by(Message.created_on.desc())
         records = [row.to_json() for row in rows]
         return jsonify(records), 200
     except Exception as e:
