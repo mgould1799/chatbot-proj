@@ -1,4 +1,8 @@
-from app import db
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+db = SQLAlchemy(app)
 
 class Message(db.Model):
     __tablename__ = 'messages'

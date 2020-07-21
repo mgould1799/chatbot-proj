@@ -4,3 +4,5 @@
     https://github.com/kiasaki/docker-alpine-postgres/issues/18:
 - sql statement to create table:
     CREATE TABLE messages (message_id serial PRIMARY KEY, message VARCHAR NOT NULL, created_on TIMESTAMP NOT NULL);
+- terraform serverless flask app
+    https://medium.com/hackernoon/deploy-your-flask-api-to-any-serverless-cloud-platform-using-this-simple-pattern-2d32c3c4629a
