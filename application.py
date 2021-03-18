@@ -4,19 +4,20 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 from db import Message
 
-app = Flask(__name__)
-app.config.from_pyfile('./conf/slack-project-conf.py')
-db = SQLAlchemy(app)
+application = Flask(__name__)
+application.config.from_pyfile('./conf/slack-project-conf.py')
+db = SQLAlchemy(application)
+application.debug = True
 
-@app.route('/bot/message', methods=['POST'])
+@application.route('/bot/message', methods=['POST'])
 def sendMesage():
     messageToSend = request.args.get("message")
 
-    client = WebClient(token=app.config['SLACK_KEY'])
+    client = WebClient(token=application.config['SLACK_KEY'])
     try:
         # send message to slack
         response = client.chat_postMessage(
-            channel=app.config['SLACK_CHANNEL'],
+            channel=application.config['SLACK_CHANNEL'],
             text=messageToSend)
         assert response["message"]["text"] == messageToSend
 
@@ -31,7 +32,7 @@ def sendMesage():
     return '', 204
 
 
-@app.route('/bot/list/message', methods=['GET'])
+@application.route('/bot/list/message', methods=['GET'])
 def getMessages():
     try:
         rows = Message.query.order_by(Message.created_on.desc())
@@ -41,6 +42,9 @@ def getMessages():
         print(e)
         return {"error": str(e)}, 500
 
+@application.route('/')
+def test():
+    return '', 204
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    application.run(host='0.0.0.0')

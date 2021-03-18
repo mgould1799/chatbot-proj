@@ -12,14 +12,14 @@ export class ChatbotApiService {
 
   // POST method to send slack message
   async SendMessage(message) {
-    return await this.http.post('http://slack-api-dev.us-east-1.elasticbeanstalk.com/bot/message?message='+message, {}).
+    return await this.http.post('https://cors-anywhere.herokuapp.com/http://slack-api-dev.us-east-1.elasticbeanstalk.com/bot/message?message='+message, {}).
     toPromise().then(response => {
       return {response: response}
     });
   }
 
   async ListMessages() {
-    return await this.http.get('http://slack-api-dev.us-east-1.elasticbeanstalk.com/bot/list/message').
+    return await this.http.get('https://cors-anywhere.herokuapp.com/http://slack-api-dev.us-east-1.elasticbeanstalk.com/bot/list/message').
     toPromise().then(response => {
       return {response: response}
     });

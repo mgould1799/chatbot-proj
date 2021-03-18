@@ -6,3 +6,8 @@
     CREATE TABLE messages (message_id serial PRIMARY KEY, message VARCHAR NOT NULL, created_on TIMESTAMP NOT NULL);
 - terraform serverless flask app
     https://medium.com/hackernoon/deploy-your-flask-api-to-any-serverless-cloud-platform-using-this-simple-pattern-2d32c3c4629a
+- deploy using elastic beanstalk
+    https://medium.com/@rodkey/deploying-a-flask-application-on-aws-a72daba6bb80
+    - if using a rds outside of beanstalk, make sure to add to the security group
+- fix cors issue. use herokus proxy
+    https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
